@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nithin Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+  --bg: #06080d;
+  --surface: #0d1117;
+  --border: rgba(255,255,255,0.06);
+  --text: #e8eaf0;
+  --muted: #556070;
+  --dim: #2a3040;
+  --blue: #4d9fff;
+  --blue-dim: rgba(77,159,255,0.12);
+  --red: #ff5e5e;
+}
+
+  body {
+    font-family: 'Syne', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grid noise background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    top: -200px;
+    left: -200px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(0,229,160,0.04) 0%, transparent 65%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ===== NAV ===== */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    height: 56px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(6,8,13,0.85);
+    backdrop-filter: blur(20px);
+  }
+
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--blue);
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-logo::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--blue);
+    box-shadow: 0 0 8px var(--blue);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 4px;
+  }
+
+  .nav-links button {
+    background: none;
+    border: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 6px 14px;
+    border-radius: 6px;
+    transition: all 0.2s;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .nav-links button:hover,
+  .nav-links button.active {
+    color: var(--text);
+    background: rgba(255,255,255,0.05);
+  }
+
+  .nav-links button.active {
+    color: var(--blue);
+  }
+
+  /* ===== SECTIONS ===== */
+  .section {
+    display: none;
+    position: relative;
+    z-index: 1;
+  }
+
+  .section.active { display: block; }
+
+  /* ===== DASHBOARD ===== */
+  .dash-hero {
+    padding: 70px 40px 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+    animation: fadeUp 0.5s ease forwards;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .dash-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--blue);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .dash-title {
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 800;
+    line-height: 1.05;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+
+  .dash-title span {
+    color: var(--blue);
+  }
+
+  .dash-subtitle {
+    margin-top: 12px;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+
+  /* stat bar */
+  .stat-bar {
+    display: flex;
+    gap: 0;
+    margin-top: 40px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--surface);
+  }
+
+  .stat-item {
+    flex: 1;
+    padding: 16px 24px;
+    border-right: 1px solid var(--border);
+  }
+
+  .stat-item:last-child { border-right: none; }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .stat-val {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .stat-val.blue { color: var(--blue); }
+  .stat-val.blue { color: var(--blue); }
+
+  /* services grid */
+  .services-heading {
+    max-width: 1100px;
+    margin: 50px auto 20px;
+    padding: 0 40px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .services-heading::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 40px 60px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    transition: border-color 0.2s, transform 0.2s;
+    cursor: default;
+    animation: fadeUp 0.5s ease forwards;
+    animation-delay: calc(var(--i) * 0.07s);
+    opacity: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--blue);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+
+  .card:hover {
+    border-color: rgba(0,229,160,0.2);
+    transform: translateY(-3px);
+  }
+
+  .card:hover::before {
+    transform: scaleX(1);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+
+  .card-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: var(--blue-dim);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--blue);
+    box-shadow: 0 0 6px var(--blue);
+  }
+
+  .card-name {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+
+  .card-desc {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+    margin-bottom: 18px;
+  }
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .card-url {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--dim);
+  }
+
+  .card-link {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--blue);
+    text-decoration: none;
+    border: 1px solid rgba(0,229,160,0.3);
+    padding: 5px 12px;
+    border-radius: 6px;
+    transition: background 0.2s, color 0.2s;
+    letter-spacing: 0.05em;
+  }
+
+  .card-link:hover {
+    background: var(--blue);
+    color: var(--bg);
+  }
+
+  /* ===== ABOUT ===== */
+  .about-wrap {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 60px 40px;
+    animation: fadeUp 0.4s ease forwards;
+  }
+
+  .about-wrap h1 {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+
+  .about-wrap > p {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 50px;
+    line-height: 1.6;
+  }
+
+  .section-block {
+    margin-bottom: 40px;
+  }
+
+  .section-block h2 {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--blue);
+    font-family: 'DM Mono', monospace;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-block p {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.75;
+  }
+
+  .code-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--text);
+    line-height: 2;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .code-block::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--blue);
+    opacity: 0.6;
+  }
+
+  .code-comment { color: var(--muted); }
+  .code-key { color: var(--blue); }
+  .code-val { color: var(--blue); }
+  .code-arrow { color: var(--dim); }
+
+  .arch-flow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 20px 0;
+  }
+
+  .arch-node {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--text);
+    white-space: nowrap;
+  }
+
+  .arch-node.highlight {
+    border-color: rgba(0,229,160,0.3);
+    color: var(--blue);
+  }
+
+  .arch-arrow { color: var(--dim); font-size: 16px; }
+
+  .why-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .why-list li {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    padding-left: 20px;
+    position: relative;
+    line-height: 1.6;
+  }
+
+  .why-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--blue);
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">nithin.lab</div>
+  <div class="nav-links">
+    <button class="active" onclick="showPage('dashboard', this)">Dashboard</button>
+    <button onclick="showPage('about', this)">About</button>
+  </div>
+</nav>
+
+<!-- DASHBOARD -->
+<div id="dashboard" class="section active">
+  <div class="dash-hero">
+    <div class="dash-eyebrow">/ homelab infrastructure</div>
+    <h1 class="dash-title">Internal<br><span>Services</span></h1>
+    <p class="dash-subtitle">Mac mini · Docker · 192.168.18.24</p>
+
+    <div class="stat-bar">
+      <div class="stat-item">
+        <div class="stat-label">Host</div>
+        <div class="stat-val">Mac Mini</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">Runtime</div>
+        <div class="stat-val">Docker</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">Services</div>
+        <div class="stat-val blue">5 online</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">DNS</div>
+        <div class="stat-val blue">Pi-hole</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="services-heading">Services</div>
+
+  <div class="grid">
+    <div class="card" style="--i:1">
+      <div class="card-header">
+        <div class="card-icon">🛡️</div>
+        <div class="status-dot"></div>
+      </div>
+      <div class="card-name">Pi-hole</div>
+      <div class="card-desc">DNS-level ad blocker and local network resolver. Handles all .home domain lookups.</div>
+      <div class="card-footer">
+        <div class="card-url">:8081</div>
+      <a href="https://pihole.nithinsrinivas.nl target="_blank" rel="noopener">open</a>
+        </div>
+    </div>
+
+    <div class="card" style="--i:2">
+      <div class="card-header">
+        <div class="card-icon">📊</div>
+        <div class="status-dot"></div>
+      </div>
+      <div class="card-name">Uptime Kuma</div>
+      <div class="card-desc">Service monitoring dashboard with uptime tracking and alert notifications.</div>
+      <div class="card-footer">
+        <div class="card-url">:3001</div>
+        <a href="https://kuma.nithinsrinivas.nl" target="_blank" rel="noopener">open</a>
+      </div>
+    </div>
+
+    <div class="card" style="--i:3">
+      <div class="card-header">
+        <div class="card-icon">⚙️</div>
+        <div class="status-dot"></div>
+      </div>
+      <div class="card-name">Nginx Proxy Manager</div>
+      <div class="card-desc">Reverse proxy managing all internal routing — maps hostnames to container ports.</div>
+      <div class="card-footer">
+        <div class="card-url">:81</div>
+        <a href="https://npm.nithinsrinivas.nl" target="_blank" rel="noopener">open</a>
+      </div>
+    </div>
+
+    <!-- ADDED ONLY -->
+    <div class="card" style="--i:4">
+      <div class="card-header">
+        <div class="card-icon">🐳</div>
+        <div class="status-dot"></div>
+      </div>
+      <div class="card-name">Portainer</div>
+      <div class="card-desc">Docker management UI for containers, images, volumes, and stacks.</div>
+      <div class="card-footer">
+        <div class="card-url">:9000</div>
+        <a href="https://portainer.nithinsrinivas.nl" target="_blank" rel="noopener">open</a>
+      </div>
+    </div>
+<div class="card" style="--i:5">
+  <div class="card-header">
+    <div class="card-icon">🎬</div>
+    <div class="status-dot"></div>
+  </div>
+  <div class="card-name">Jellyfin</div>
+  <div class="card-desc">Private Netflix for your media library.</div>
+  <div class="card-footer">
+    <div class="card-url">:8096</div>
+    <a href="https://jellyfin.nithinsrinivas.nl" target="_blank" rel="noopener">open</a>
+  </div>
+</div>
+<div class="card" style="--i:6">
+  <div class="card-header">
+    <div class="card-icon">📜</div>
+    <div class="status-dot"></div>
+  </div>
+  <div class="card-name">Dozzle</div>
+  <div class="card-desc">Live logs viewer for all Docker containers.</div>
+  <div class="card-footer">
+    <div class="card-url">:8083</div>
+    <a href="https://dozzle.nithinsrinivas.nl" target="_blank" rel="noopener">open</a>
+  </div>
+</div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div id="about" class="section">
+  <div class="about-wrap">
+    <h1>Architecture</h1>
+    <p>A self-hosted homelab running on a Mac mini with Docker. Designed to mirror real-world infrastructure patterns using DNS + reverse proxy routing.</p>
+
+    <div class="section-block">
+      <h2>Traffic Flow</h2>
+      <div class="arch-flow">
+        <div class="arch-node highlight">Browser</div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-node">Pi-hole DNS</div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-node">Nginx Proxy</div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-node highlight">Services</div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <h2>DNS Records</h2>
+      <div class="code-block">
+        <span class="code-comment"># All .home domains resolve to the Mac mini</span><br>
+        <span class="code-key">pihole.home</span>  <span class="code-arrow">→</span>  <span class="code-val">192.168.18.24</span><br>
+        <span class="code-key">kuma.home</span>    <span class="code-arrow">→</span>  <span class="code-val">192.168.18.24</span><br>
+        <span class="code-key">nginx.home</span>   <span class="code-arrow">→</span>  <span class="code-val">192.168.18.24</span><br>
+        <span class="code-key">portainer.home</span>   <span class="code-arrow">→</span>  <span class="code-val">192.168.18.24</span><br>
+        <span class="code-key">jellyfin.home</span>  <span class="code-arrow">→</span>  <span class="code-val">192.168.18.24</span><br>
+        <span class="code-key">dozzle.home</span>   <span class="code-arrow">→</span>  <span class="code-val">192.168.18.24</span><br>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <h2>Port Routing</h2>
+      <div class="code-block">
+        <span class="code-comment"># Nginx maps hostnames to container ports</span><br>
+        <span class="code-key">pihole.home</span>  <span class="code-arrow">→</span>  <span class="code-val">:8081</span><br>
+        <span class="code-key">kuma.home</span>    <span class="code-arrow">→</span>  <span class="code-val">:3001</span><br>
+        <span class="code-key">nginx.home</span>   <span class="code-arrow">→</span>  <span class="code-val">:81</span><br>
+        <span class="code-key">portainer.home</span>   <span class="code-arrow">→</span>  <span class="code-val">:9000</span><br>
+        <span class="code-key">jellyfin.home</span>  <span class="code-arrow">→</span>  <span class="code-val">:8096</span><br>
+        <span class="code-key">dozzle.home</span>   <span class="code-arrow">→</span>  <span class="code-val">:8083</span><br>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <h2>Design Rationale</h2>
+      <ul class="why-list">
+        <li>Clean URLs with no port numbers — <code>kuma.home</code> not <code>192.168.18.24:3001</code></li>
+        <li>Pi-hole as central DNS avoids per-device <code>/etc/hosts</code> editing</li>
+        <li>Nginx Proxy Manager provides a GUI for managing routing rules</li>
+        <li>Mirrors real-world infra: DNS resolution + reverse proxy is production-standard</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  function showPage(page, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
+    document.getElementById(page).classList.add('active');
+    if (btn) btn.classList.add('active');
+  }
+</script>
+</body>
+</html>

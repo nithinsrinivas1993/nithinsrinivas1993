@@ -1,0 +1,47 @@
+2026-05-10T17:12:46Z INF Starting tunnel tunnelID=e7e38c4f-b46e-442c-9290-033337e0bd8c
+2026-05-10T17:12:46Z INF Cannot determine default configuration path. No file [config.yml config.yaml] in [~/.cloudflared ~/.cloudflare-warp ~/cloudflare-warp /etc/cloudflared /usr/local/etc/cloudflared]
+2026-05-10T17:12:46Z INF Version 2026.3.0 (Checksum 99f099a3834e0b20ec2a18ac77d3d77261b77652310d97eca18fc1797d4349d0)
+2026-05-10T17:12:46Z INF GOOS: darwin, GOVersion: go1.26.1, GoArch: arm64
+2026-05-10T17:12:46Z INF cloudflared will not automatically update if installed by a package manager.
+2026-05-10T17:12:46Z INF Generated Connector ID: 70d4cc58-ee21-4b8d-8316-a59d86291d15
+2026-05-10T17:12:46Z WRN No ingress rules were defined in provided config (if any) nor from the cli, cloudflared will return 503 for all incoming HTTP requests
+2026-05-10T17:12:46Z INF Initial protocol quic
+2026-05-10T17:12:46Z INF ICMP proxy will use 192.168.18.24 as source for IPv4
+2026-05-10T17:12:46Z INF ICMP proxy will use fe80::e2:caaf:ba3:7d53 in zone en1 as source for IPv6
+2026-05-10T17:12:46Z INF Created ICMP proxy listening on 192.168.18.24:0
+2026-05-10T17:12:46Z INF ICMP proxy will use 192.168.18.24 as source for IPv4
+2026-05-10T17:12:46Z INF ICMP proxy will use fe80::e2:caaf:ba3:7d53 in zone en1 as source for IPv6
+2026-05-10T17:12:46Z INF Starting metrics server on 127.0.0.1:20241/metrics
+2026-05-10T17:12:46Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveP256] connIndex=0 event=0 ip=198.41.192.167
+2026-05-10T17:12:46Z INF Registered tunnel connection connIndex=0 connection=e30d0cb8-4084-4917-8034-ddb3bbfc5697 event=0 ip=198.41.192.167 location=lhr10 protocol=quic
+2026-05-10T17:12:46Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveP256] connIndex=1 event=0 ip=198.41.200.73
+2026-05-10T17:12:46Z INF Registered tunnel connection connIndex=1 connection=6c9fe45c-acd0-4b30-9a62-0374d016ff00 event=0 ip=198.41.200.73 location=lhr01 protocol=quic
+2026-05-10T17:12:47Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveP256] connIndex=2 event=0 ip=198.41.192.67
+2026-05-10T17:12:47Z INF Registered tunnel connection connIndex=2 connection=3ab8f936-dc66-45b9-ad4c-b9ebefcc8dd9 event=0 ip=198.41.192.67 location=lhr18 protocol=quic
+2026-05-10T17:12:48Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveP256] connIndex=3 event=0 ip=198.41.200.113
+2026-05-10T17:12:49Z INF Registered tunnel connection connIndex=3 connection=c46fa687-16cf-44b7-867b-fdfc60caf6c2 event=0 ip=198.41.200.113 location=lhr14 protocol=quic
+2026-05-10T17:15:19Z INF Initiating graceful shutdown due to signal terminated ...
+2026-05-10T17:15:19Z ERR failed to run the datagram handler error="context canceled" connIndex=2 event=0 ip=198.41.192.67
+2026-05-10T17:15:19Z ERR failed to run the datagram handler error="Application error 0x0 (remote)" connIndex=3 event=0 ip=198.41.200.113
+2026-05-10T17:15:19Z ERR failed to serve tunnel connection error="accept stream listener encountered a failure while serving" connIndex=2 event=0 ip=198.41.192.67
+2026-05-10T17:15:19Z ERR Serve tunnel error error="accept stream listener encountered a failure while serving" connIndex=2 event=0 ip=198.41.192.67
+2026-05-10T17:15:19Z INF Retrying connection in up to 1s connIndex=2 event=0 ip=198.41.192.67
+2026-05-10T17:15:19Z ERR failed to serve tunnel connection error="accept stream listener encountered a failure while serving" connIndex=3 event=0 ip=198.41.200.113
+2026-05-10T17:15:19Z ERR Connection terminated connIndex=2
+2026-05-10T17:15:19Z ERR Serve tunnel error error="accept stream listener encountered a failure while serving" connIndex=3 event=0 ip=198.41.200.113
+2026-05-10T17:15:19Z INF Retrying connection in up to 1s connIndex=3 event=0 ip=198.41.200.113
+2026-05-10T17:15:19Z ERR Connection terminated connIndex=3
+2026-05-10T17:15:19Z ERR failed to run the datagram handler error="Application error 0x0 (remote)" connIndex=1 event=0 ip=198.41.200.73
+2026-05-10T17:15:19Z ERR failed to run the datagram handler error="context canceled" connIndex=0 event=0 ip=198.41.192.167
+2026-05-10T17:15:19Z ERR failed to serve tunnel connection error="accept stream listener encountered a failure while serving" connIndex=1 event=0 ip=198.41.200.73
+2026-05-10T17:15:19Z ERR failed to serve tunnel connection error="accept stream listener encountered a failure while serving" connIndex=0 event=0 ip=198.41.192.167
+2026-05-10T17:15:19Z ERR Serve tunnel error error="accept stream listener encountered a failure while serving" connIndex=1 event=0 ip=198.41.200.73
+2026-05-10T17:15:19Z ERR Serve tunnel error error="accept stream listener encountered a failure while serving" connIndex=0 event=0 ip=198.41.192.167
+2026-05-10T17:15:19Z INF Retrying connection in up to 1s connIndex=1 event=0 ip=198.41.200.73
+2026-05-10T17:15:19Z ERR Connection terminated connIndex=1
+2026-05-10T17:15:19Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.192.167
+2026-05-10T17:15:19Z ERR Connection terminated connIndex=0
+2026-05-10T17:15:19Z ERR no more connections active and exiting
+2026-05-10T17:15:19Z INF Tunnel server stopped
+2026-05-10T17:15:19Z INF Metrics server stopped
+2026-05-10T17:15:19Z INF icmp router terminated error="read udp 192.168.18.24:0: raw-read udp 192.168.18.24:0: use of closed network connection"

@@ -1,0 +1,108 @@
+name: homelab
+
+services:
+
+  landing:
+    image: nginx:latest
+    container_name: landing
+    restart: unless-stopped
+
+    ports:
+      - "8082:80"
+
+    volumes:
+      - ./index.html:/usr/share/nginx/html/index.html:ro
+
+  dozzle:
+    image: amir20/dozzle:latest
+    container_name: dozzle
+    restart: unless-stopped
+
+    ports:
+      - "8083:8080"
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  jellyfin:
+    image: jellyfin/jellyfin
+    container_name: jellyfin
+    restart: unless-stopped
+
+    ports:
+      - "8096:8096"
+
+    volumes:
+      - ./media/config:/config
+      - ./media/cache:/cache
+
+  pihole:
+    image: pihole/pihole:latest
+    container_name: pihole
+    restart: unless-stopped
+
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "8081:80/tcp"
+      - "8443:443/tcp"
+
+    environment:
+      TZ: Europe/London
+      FTLCONF_webserver_api_password: nithinnn
+      FTLCONF_dns_listeningMode: ALL
+
+    volumes:
+      - ./pihole/etc-pihole:/etc/pihole
+
+    cap_add:
+      - NET_ADMIN
+      - SYS_TIME
+      - SYS_NICE
+
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: unless-stopped
+
+    ports:
+      - "9000:9000"
+      - "9443:9443"
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./portainer/data:/data
+
+  nginx-proxy-manager:
+    image: jc21/nginx-proxy-manager:latest
+    container_name: nginx-proxy-manager
+    restart: unless-stopped
+
+    ports:
+      - "80:80"
+      - "81:81"
+      - "443:443"
+
+    volumes:
+      - ./nginx-proxy-manager/data:/data
+      - ./nginx-proxy-manager/letsencrypt:/etc/letsencrypt
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared
+    restart: unless-stopped
+
+    command: tunnel --config /etc/cloudflared/tunnel.yaml run
+
+    volumes:
+      - ./cloudflare:/etc/cloudflared
+      - /Users/nithinsrinivas/.cloudflared:/Users/nithinsrinivas/.cloudflared:ro
+
+  uptime-kuma:
+    image: louislam/uptime-kuma:latest
+    container_name: uptime-kuma
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./uptime-kuma:/app/data

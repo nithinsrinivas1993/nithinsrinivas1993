@@ -1,0 +1,26 @@
+tunnel: e7e38c4f-b46e-442c-9290-033337e0bd8c
+credentials-file: /Users/nithinsrinivas/.cloudflared/e7e38c4f-b46e-442c-9290-033337e0bd8c.json
+
+ingress:
+  - hostname: app.nithinsrinivas.nl
+    service: http://landing:80
+
+  - hostname: pihole.nithinsrinivas.nl
+    service: http://pihole:80
+
+  - hostname: kuma.nithinsrinivas.nl
+    service: http://uptime-kuma:3001
+
+  - hostname: npm.nithinsrinivas.nl
+    service: http://nginx-proxy-manager:81
+
+  - hostname: portainer.nithinsrinivas.nl
+    service: http://portainer:9000
+
+  - hostname: jellyfin.nithinsrinivas.nl
+    service: http://jellyfin:8096
+
+  - hostname: dozzle.nithinsrinivas.nl
+    service: http://dozzle:8080
+
+  - service: http_status:404

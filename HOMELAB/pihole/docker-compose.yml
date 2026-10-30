@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    restart: unless-stopped
+
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "8081:80/tcp"     # 👈 moved from 80
+      - "8443:443/tcp"    # 👈 moved from 443
+
+    environment:
+      TZ: "Europe/London"
+      FTLCONF_webserver_api_password: "nithinnn"
+      FTLCONF_dns_listeningMode: "ALL"
+
+    volumes:
+      - ./etc-pihole:/etc/pihole
+
+    cap_add:
+      - NET_ADMIN
+      - SYS_TIME
+      - SYS_NICE

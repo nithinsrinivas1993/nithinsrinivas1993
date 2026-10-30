@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nithin Lab</title>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  :root {
+    --bg: #06080d;
+    --surface: #0d1117;
+    --border: rgba(255,255,255,0.06);
+    --text: #e8eaf0;
+    --muted: #556070;
+    --dim: #2a3040;
+    --blue: #4d9fff;
+    --blue-dim: rgba(77,159,255,0.12);
+  }
+
+  body {
+    font-family: 'Syne', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    top: -200px;
+    left: -200px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(77,159,255,0.05) 0%, transparent 65%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    height: 56px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(6,8,13,0.85);
+    backdrop-filter: blur(20px);
+  }
+
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--blue);
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-logo::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--blue);
+    box-shadow: 0 0 8px var(--blue);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 4px;
+  }
+
+  .nav-links button {
+    background: none;
+    border: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 6px 14px;
+    border-radius: 6px;
+    transition: all 0.2s;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .nav-links button:hover,
+  .nav-links button.active {
+    color: var(--text);
+    background: rgba(255,255,255,0.05);
+  }
+
+  .nav-links button.active {
+    color: var(--blue);
+  }
+
+  .section {
+    display: none;
+    position: relative;
+    z-index: 1;
+  }
+
+  .section.active {
+    display: block;
+  }
+
+  .dash-hero {
+    padding: 70px 40px 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+    animation: fadeUp 0.5s ease forwards;
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .dash-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--blue);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .dash-title {
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+
+  .dash-title span {
+    color: var(--blue);
+  }
+
+  .dash-subtitle {
+    margin-top: 12px;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .stat-bar {
+    display: flex;
+    margin-top: 40px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--surface);
+  }
+
+  .stat-item {
+    flex: 1;
+    padding: 16px 24px;
+    border-right: 1px solid var(--border);
+  }
+
+  .stat-item:last-child {
+    border-right: none;
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .stat-val {
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .stat-val.blue {
+    color: var(--blue);
+  }
+
+  .services-heading {
+    max-width: 1100px;
+    margin: 50px auto 20px;
+    padding: 0 40px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .services-heading::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 40px 60px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    transition: 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(77,159,255,0.25);
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--blue);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+
+  .card:hover::before {
+    transform: scaleX(1);
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+
+  .card-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: var(--blue-dim);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--blue);
+    box-shadow: 0 0 6px var(--blue);
+  }
+
+  .card-name {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .card-desc {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+    margin-bottom: 18px;
+  }
+
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .card-url {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--dim);
+  }
+
+  .card-link {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--blue);
+    text-decoration: none;
+    border: 1px solid rgba(77,159,255,0.3);
+    padding: 5px 12px;
+    border-radius: 6px;
+    transition: 0.2s;
+  }
+
+  .card-link:hover {
+    background: var(--blue);
+    color: var(--bg);
+  }
+
+  .about-wrap {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 60px 40px;
+  }
+
+  .about-wrap h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+  }
+
+  .about-wrap p {
+    font-family: 'DM Mono', monospace;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+</style>
+</head>
+
+<body>
+
+<nav>
+  <div class="nav-logo">nithin.lab</div>
+
+  <div class="nav-links">
+    <button class="active" onclick="showPage('dashboard', this)">Dashboard</button>
+    <button onclick="showPage('about', this)">About</button>
+  </div>
+</nav>
+
+<!-- DASHBOARD -->
+<div id="dashboard" class="section active">
+
+  <div class="dash-hero">
+    <div class="dash-eyebrow">/ homelab infrastructure</div>
+
+    <h1 class="dash-title">
+      Internal<br>
+      <span>Services</span>
+    </h1>
+
+    <p class="dash-subtitle">
+      Mac mini · Docker · Cloudflare Tunnel
+    </p>
+
+    <div class="stat-bar">
+      <div class="stat-item">
+        <div class="stat-label">Host</div>
+        <div class="stat-val">Mac Mini</div>
+      </div>
+
+      <div class="stat-item">
+        <div class="stat-label">Runtime</div>
+        <div class="stat-val">Docker</div>
+      </div>
+
+      <div class="stat-item">
+        <div class="stat-label">Tunnel</div>
+        <div class="stat-val blue">Cloudflare</div>
+      </div>
+
+      <div class="stat-item">
+        <div class="stat-label">Status</div>
+        <div class="stat-val blue">Online</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="services-heading">Services</div>
+
+  <div class="grid">
+
+    <!-- PIHOLE -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">🛡️</div>
+        <div class="status-dot"></div>
+      </div>
+
+      <div class="card-name">Pi-hole</div>
+
+      <div class="card-desc">
+        DNS-level ad blocking and local resolver.
+      </div>
+
+      <div class="card-footer">
+        <div class="card-url">:8081</div>
+
+        <a class="card-link"
+           href="https://pihole.nithinsrinivas.nl/admin"
+           target="_blank"
+           rel="noopener">
+          Open
+        </a>
+      </div>
+    </div>
+
+    <!-- KUMA -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">📊</div>
+        <div class="status-dot"></div>
+      </div>
+
+      <div class="card-name">Uptime Kuma</div>
+
+      <div class="card-desc">
+        Monitoring dashboard and uptime alerts.
+      </div>
+
+      <div class="card-footer">
+        <div class="card-url">:3001</div>
+
+        <a class="card-link"
+           href="https://kuma.nithinsrinivas.nl"
+           target="_blank"
+           rel="noopener">
+          Open
+        </a>
+      </div>
+    </div>
+
+    <!-- NPM -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">⚙️</div>
+        <div class="status-dot"></div>
+      </div>
+
+      <div class="card-name">Nginx Proxy Manager</div>
+
+      <div class="card-desc">
+        Reverse proxy and routing management UI.
+      </div>
+
+      <div class="card-footer">
+        <div class="card-url">:81</div>
+
+        <a class="card-link"
+           href="https://npm.nithinsrinivas.nl"
+           target="_blank"
+           rel="noopener">
+          Open
+        </a>
+      </div>
+    </div>
+
+    <!-- PORTAINER -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">🐳</div>
+        <div class="status-dot"></div>
+      </div>
+
+      <div class="card-name">Portainer</div>
+
+      <div class="card-desc">
+        Docker container management interface.
+      </div>
+
+      <div class="card-footer">
+        <div class="card-url">:9000</div>
+
+        <a class="card-link"
+           href="https://portainer.nithinsrinivas.nl"
+           target="_blank"
+           rel="noopener">
+          Open
+        </a>
+      </div>
+    </div>
+
+    <!-- JELLYFIN -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">🎬</div>
+        <div class="status-dot"></div>
+      </div>
+
+      <div class="card-name">Jellyfin</div>
+
+      <div class="card-desc">
+        Personal media streaming server.
+      </div>
+
+      <div class="card-footer">
+        <div class="card-url">:8096</div>
+
+        <a class="card-link"
+           href="https://jellyfin.nithinsrinivas.nl"
+           target="_blank"
+           rel="noopener">
+          Open
+        </a>
+      </div>
+    </div>
+
+    <!-- DOZZLE -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">📜</div>
+        <div class="status-dot"></div>
+      </div>
+
+      <div class="card-name">Dozzle</div>
+
+      <div class="card-desc">
+        Live Docker container logs viewer.
+      </div>
+
+      <div class="card-footer">
+        <div class="card-url">:8083</div>
+
+        <a class="card-link"
+           href="https://dozzle.nithinsrinivas.nl"
+           target="_blank"
+           rel="noopener">
+          Open
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div id="about" class="section">
+
+  <div class="about-wrap">
+    <h1>Architecture</h1>
+
+    <p>
+      Self-hosted homelab running on a Mac mini using Docker,
+      Cloudflare Tunnel, and internal service routing.
+    </p>
+  </div>
+
+</div>
+
+<script>
+  function showPage(page, btn) {
+    document.querySelectorAll('.section')
+      .forEach(s => s.classList.remove('active'));
+
+    document.querySelectorAll('.nav-links button')
+      .forEach(b => b.classList.remove('active'));
+
+    document.getElementById(page)
+      .classList.add('active');
+
+    btn.classList.add('active');
+  }
+</script>
+
+</body>
+</html>

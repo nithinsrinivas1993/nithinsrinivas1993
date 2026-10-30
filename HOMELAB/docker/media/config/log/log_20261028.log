@@ -1,0 +1,31 @@
+[2026-10-28 00:07:20.399 +00:00] [INF] [82] Emby.Server.Implementations.ScheduledTasks.Tasks.OptimizeDatabaseTask: Optimizing and vacuuming jellyfin.db...
+[2026-10-28 00:07:20.422 +00:00] [INF] [82] Jellyfin.Database.Providers.Sqlite.SqliteDatabaseProvider: jellyfin.db optimized successfully!
+[2026-10-28 00:07:20.422 +00:00] [INF] [82] Emby.Server.Implementations.ScheduledTasks.TaskManager: "Optimize database" Completed after 0 minute(s) and 0 seconds
+[2026-10-28 02:00:00.515 +00:00] [INF] [166] Emby.Server.Implementations.ScheduledTasks.TaskManager: "Extract Chapter Images" Completed after 0 minute(s) and 0 seconds
+[2026-10-28 02:00:01.501 +00:00] [INF] [166] Emby.Server.Implementations.ScheduledTasks.TaskManager: Daily trigger for "Extract Chapter Images" set to fire at 2026-10-29 02:00:00.000 +00:00, which is 23:59:58.4989500 from now.
+[2026-10-28 03:00:00.512 +00:00] [INF] [50] Emby.Server.Implementations.ScheduledTasks.TaskManager: "Generate Trickplay Images" Completed after 0 minute(s) and 0 seconds
+[2026-10-28 03:00:01.501 +00:00] [INF] [50] Emby.Server.Implementations.ScheduledTasks.TaskManager: Daily trigger for "Generate Trickplay Images" set to fire at 2026-10-29 03:00:00.000 +00:00, which is 23:59:58.4982165 from now.
+[2026-10-28 06:08:21.521 +00:00] [INF] [36] Emby.Server.Implementations.ScheduledTasks.Tasks.OptimizeDatabaseTask: Optimizing and vacuuming jellyfin.db...
+[2026-10-28 06:08:21.556 +00:00] [INF] [36] Jellyfin.Database.Providers.Sqlite.SqliteDatabaseProvider: jellyfin.db optimized successfully!
+[2026-10-28 06:08:21.558 +00:00] [INF] [36] Emby.Server.Implementations.ScheduledTasks.TaskManager: "Optimize database" Completed after 0 minute(s) and 0 seconds
+[2026-10-28 11:54:07.578 +00:00] [INF] [85] Emby.Server.Implementations.ScheduledTasks.TaskManager: "Audio Normalization" Completed after 0 minute(s) and 0 seconds
+[2026-10-28 11:54:07.578 +00:00] [INF] [124] Emby.Server.Implementations.ScheduledTasks.TaskManager: "Download missing subtitles" Completed after 0 minute(s) and 0 seconds
+[2026-10-28 11:54:07.584 +00:00] [INF] [178] Emby.Server.Implementations.ScheduledTasks.TaskManager: "Clean Log Directory" Completed after 0 minute(s) and 0 seconds
+[2026-10-28 11:54:07.623 +00:00] [INF] [130] Emby.Server.Implementations.ScheduledTasks.TaskManager: "Clean Transcode Directory" Completed after 0 minute(s) and 0 seconds
+[2026-10-28 11:54:07.647 +00:00] [INF] [179] Emby.Server.Implementations.ScheduledTasks.TaskManager: "Clean Cache Directory" Completed after 0 minute(s) and 0 seconds
+[2026-10-28 11:54:07.658 +00:00] [INF] [154] Emby.Server.Implementations.ScheduledTasks.TaskManager: "Download missing lyrics" Completed after 0 minute(s) and 0 seconds
+[2026-10-28 11:54:07.668 +00:00] [INF] [130] Emby.Server.Implementations.ScheduledTasks.TaskManager: "TasksRefreshChannels" Completed after 0 minute(s) and 0 seconds
+[2026-10-28 11:54:08.033 +00:00] [INF] [130] Emby.Server.Implementations.ScheduledTasks.TaskManager: "Update Plugins" Completed after 0 minute(s) and 0 seconds
+[2026-10-28 11:54:10.660 +00:00] [INF] [178] Jellyfin.LiveTv.Guide.GuideManager: Refreshing guide with 7 days of guide data
+[2026-10-28 11:54:10.664 +00:00] [INF] [178] Emby.Server.Implementations.ScheduledTasks.TaskManager: "Refresh Guide" Completed after 0 minute(s) and 3 seconds
+[2026-10-28 11:59:12.603 +00:00] [INF] [17] Emby.Server.Implementations.Library.LibraryManager: Validating media library
+[2026-10-28 11:59:12.606 +00:00] [INF] [142] Emby.Server.Implementations.ScheduledTasks.TaskManager: "Media Segment Scan" Completed after 0 minute(s) and 0 seconds
+[2026-10-28 11:59:12.637 +00:00] [WRN] [17] MediaBrowser.Controller.Entities.BaseItem: Library folder "/config/data/playlists" is inaccessible or empty, skipping
+[2026-10-28 11:59:12.639 +00:00] [WRN] [17] MediaBrowser.Controller.Entities.BaseItem: Library folder "/config/data/playlists" is inaccessible or empty, skipping
+[2026-10-28 11:59:12.644 +00:00] [INF] [17] Emby.Server.Implementations.ScheduledTasks.TaskManager: "Scan Media Library" Completed after 0 minute(s) and 0 seconds
+[2026-10-28 12:09:22.649 +00:00] [INF] [170] Emby.Server.Implementations.ScheduledTasks.Tasks.OptimizeDatabaseTask: Optimizing and vacuuming jellyfin.db...
+[2026-10-28 12:09:22.678 +00:00] [INF] [170] Jellyfin.Database.Providers.Sqlite.SqliteDatabaseProvider: jellyfin.db optimized successfully!
+[2026-10-28 12:09:22.678 +00:00] [INF] [170] Emby.Server.Implementations.ScheduledTasks.TaskManager: "Optimize database" Completed after 0 minute(s) and 0 seconds
+[2026-10-28 18:10:23.769 +00:00] [INF] [115] Emby.Server.Implementations.ScheduledTasks.Tasks.OptimizeDatabaseTask: Optimizing and vacuuming jellyfin.db...
+[2026-10-28 18:10:23.793 +00:00] [INF] [115] Jellyfin.Database.Providers.Sqlite.SqliteDatabaseProvider: jellyfin.db optimized successfully!
+[2026-10-28 18:10:23.793 +00:00] [INF] [115] Emby.Server.Implementations.ScheduledTasks.TaskManager: "Optimize database" Completed after 0 minute(s) and 0 seconds
